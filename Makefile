@@ -13,4 +13,7 @@ migrateup:
 migratedown:
 	migrate -path database/migration -database "postgresql://root:secret@localhost:5432/bank-api?sslmode=disable" -verbose down
 
-.PHONY: postgres createdb dropdb migrateup migratedown
+sqlc:
+	docker run --rm -v C:/Users/rishi/Desktop/programs/go/bank-api:/src -w /src kjconroy/sqlc generate
+
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc
