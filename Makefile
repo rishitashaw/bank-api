@@ -15,7 +15,6 @@ migratedown:
 
 sqlc:
 	docker run --rm -v C:/Users/rishi/Desktop/programs/go/bank-api:/src -w /src kjconroy/sqlc generate
-	# docker run --rm -v ${pwd}:/src -w /src kjconroy/sqlc generate
 
 test:
 	go test -v -cover ./...
