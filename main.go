@@ -7,7 +7,7 @@ import (
 	_ "github.com/lib/pq"
 
 	"github.com/rishitashaw/bank-api/api"
-	db "github.com/rishitashaw/bank-api/database/sqlc"
+	db "github.com/rishitashaw/bank-api/db/sqlc"
 	"github.com/rishitashaw/bank-api/util"
 )
 
