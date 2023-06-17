@@ -8,25 +8,25 @@ import (
 
 	"github.com/rishitashaw/bank-api/api"
 	db "github.com/rishitashaw/bank-api/database/sqlc"
-)
-
-const (
-	dbDriver = "postgres"
-	dbSource = "postgresql://root:secret@localhost:5432/bank-api?sslmode=disable"
-	serverAddress = "0.0.0.0:8080"
+	"github.com/rishitashaw/bank-api/util"
 )
 
 func main() {
 	var err error
 
-	conn, err := sql.Open(dbDriver, dbSource)
+	config, err := util.LoadConfig(".")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	conn, err := sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
 		log.Fatal("cannot connect to database", err)
 	}
 
-	store:=db.NewStore(conn)
-	server:=api.NewServer(store)
+	store := db.NewStore(conn)
+	server := api.NewServer(store)
 
-	err=server.Start(serverAddress)
+	err = server.Start(config.ServerAdress)
 
 }

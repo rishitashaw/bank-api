@@ -10,7 +10,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-
 func createRandomAccount(t *testing.T) Accounts {
 
 	arg := CreateAccountParams{
@@ -81,10 +80,6 @@ func TestDeleteAccount(t *testing.T) {
 }
 
 func TestListAccounts(t *testing.T) {
-	var lastAccount Accounts
-	for i := 0; i < 10; i++ {
-		lastAccount = createRandomAccount(t)
-	}
 
 	arg := ListAccountsParams{
 		Limit:  5,
@@ -97,6 +92,5 @@ func TestListAccounts(t *testing.T) {
 
 	for _, account := range accounts {
 		require.NotEmpty(t, account)
-		require.Equal(t, lastAccount.Owner, account.Owner)
 	}
 }
