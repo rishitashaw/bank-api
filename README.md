@@ -11,7 +11,7 @@ The Bank Service API is a backend web service for a bank, providing APIs for the
 
 ## Database model
 
-![bank-api](https://github.com/rishitashaw/bank-api/assets/75828535/28f131a8-7645-4ef9-ba15-82a3fda10080)
+![bank-api]('./db/schema/bank-api.png')
 
 # Local Development Setup
 
