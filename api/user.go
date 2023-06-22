@@ -16,6 +16,12 @@ type createUserRequest struct {
 	Email          string `json:"email" binding:"required"`
 }
 
+type createUserResponse struct {
+	Username string `json:"username" binding:"required"`
+	FullName string `json:"full_name" binding:"required"`
+	Email    string `json:"email" binding:"required"`
+}
+
 func (server *Server) createUser(ctx *gin.Context) {
 	var req createUserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -30,7 +36,7 @@ func (server *Server) createUser(ctx *gin.Context) {
 		Email:          req.Email,
 	}
 
-	account, err := server.store.CreateUser(ctx, arg)
+	user, err := server.store.CreateUser(ctx, arg)
 
 	if err != nil {
 		if pqErr, ok := err.(*pq.Error); ok {
@@ -44,7 +50,13 @@ func (server *Server) createUser(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, account)
+	resp := createUserResponse{
+		Username: user.Username,
+		FullName: user.FullName,
+		Email:    user.Email,
+	}
+
+	ctx.JSON(http.StatusOK, resp)
 }
 
 type getUserRequest struct {
@@ -58,7 +70,7 @@ func (server *Server) getUser(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
-	account, err := server.store.GetUser(ctx, req.Username)
+	user, err := server.store.GetUser(ctx, req.Username)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
@@ -67,5 +79,10 @@ func (server *Server) getUser(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	ctx.JSON(http.StatusOK, account)
+	resp := createUserResponse{
+		Username: user.Username,
+		FullName: user.FullName,
+		Email:    user.Email,
+	}
+	ctx.JSON(http.StatusOK, resp)
 }
